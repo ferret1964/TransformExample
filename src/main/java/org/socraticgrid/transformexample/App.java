@@ -13,15 +13,16 @@ import org.springframework.core.io.Resource;
  * Hello world!
  *
  */
-public class App 
+public class App
 {
-    public static void main( String[] args )
+
+    public static void main(String[] args)
     {
         ApplicationContext ctx = new ClassPathXmlApplicationContext("classpath:MDWSDocumentTransformer.xml");
         Transformer tx = (Transformer) ctx.getBean("Xform");
         Resource res = new ClassPathResource("PatientDataRequest_meds_10013.xml");
-       
-        String result="";
+
+        String result = "";
         try
         {
             result = tx.transform("Medications", res.getInputStream());
@@ -31,6 +32,6 @@ public class App
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
         }
         System.out.println(result);
-        
+
     }
 }
