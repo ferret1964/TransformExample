@@ -38,7 +38,11 @@
     </bean>
 
     <bean name="XML2JSONXform" class="org.socraticgrid.documenttransformer.XSLTTransformStep">
-        <property name="styleSheet" value="classpath:xml-to-json.xsl"/>
+        <property name="xsltStyleSheet">
+            <bean class="org.springframework.core.io.ClassPathResource">
+                <constructor-arg value="xml-to-json.xsl"/>          
+            </bean>
+        </property>
         <property name="styleSheetParameters">
             <map>
                 <entry key="use-badgerfish" value="#{false}"/>
@@ -48,16 +52,16 @@
         </property>
     </bean>
     
-    <bean name="FHIRRX_Vuid2RxNorm" class="org.socraticgrid.documenttransformer.FHIRCodeTranslator">
+    <bean name="FHIRRX_Vuid2RxNorm" class="org.socraticgrid.fhirlib.FHIRCodeTranslator">
         <property name="codeProcessor" ref="SearchProcessor"/>
         <property name="replacementList">
             <list>
-                <bean class="org.socraticgrid.documenttransformer.CodeReplacement">
+                <bean class="org.socraticgrid.fhirlib.CodeReplacement">
                     <property name="targetSystem" value="RxNorm"/>
                     <property name="defaultSystem" value="vuid"/>
                     <property name="xPath" value="/fhir:PrescriptionList/fhir:Prescription/fhir:medicine/fhir:identification/fhir:coding"/>
                 </bean>
-                <bean class="org.socraticgrid.documenttransformer.CodeReplacement">
+                <bean class="org.socraticgrid.fhirlib.CodeReplacement">
                     <property name="targetSystem" value="RxNorm"/>
                     <property name="defaultSystem" value="vuid"/>
                     <property name="xPath" value="/fhir:PrescriptionList/fhir:Prescription/fhir:medicine/fhir:activeIngredient/fhir:identification/fhir:coding"/>
@@ -67,22 +71,46 @@
     </bean>
     
     <bean name="MDWS2FHIR_Meds" class="org.socraticgrid.documenttransformer.XSLTTransformStep">
-        <property name="styleSheet" value="classpath:MDWSToFHIR_Prescriptions.xslt"/>
+        <property name="xsltStyleSheet">
+            <bean class="org.springframework.core.io.ClassPathResource">
+                <constructor-arg value="MDWSToFHIR_Prescriptions.xslt"/>
+            </bean>
+        </property>
     </bean>
     <bean name="MDWS2FHIR_Problems" class="org.socraticgrid.documenttransformer.XSLTTransformStep">
-        <property name="styleSheet" value="classpath:MDWSToFHIR_Problems.xslt"/>
+        <property name="xsltStyleSheet">
+            <bean class="org.springframework.core.io.ClassPathResource">
+                <constructor-arg value="MDWSToFHIR_Problems.xslt"/>          
+            </bean>
+        </property>
     </bean>
     <bean name="MDWS2FHIR_Patient" class="org.socraticgrid.documenttransformer.XSLTTransformStep">
-        <property name="styleSheet" value="classpath:MDWSToFHIR_Patient.xslt"/>
+        <property name="xsltStyleSheet">
+            <bean class="org.springframework.core.io.ClassPathResource">
+                <constructor-arg value="MDWSToFHIR_Patient.xslt"/>
+            </bean>
+        </property>
     </bean>
     <bean name="FHIR2Display_Problems" class="org.socraticgrid.documenttransformer.XSLTTransformStep">
-        <property name="styleSheet" value="classpath:FHIRToJSONFact_Problems.xslt"/>
+        <property name="xsltStyleSheet">
+            <bean class="org.springframework.core.io.ClassPathResource">
+                <constructor-arg value="FHIRToJSONFact_Problems.xslt"/>
+            </bean>
+        </property>
     </bean>
     <bean name="FHIR2Display_Meds" class="org.socraticgrid.documenttransformer.XSLTTransformStep">
-        <property name="styleSheet" value="classpath:FHIRToJSONFact_Meds.xslt"/>
+        <property name="xsltStyleSheet">
+            <bean class="org.springframework.core.io.ClassPathResource">
+                <constructor-arg value="FHIRToJSONFact_Meds.xslt"/>
+            </bean>
+        </property>
     </bean>
     <bean name="FHIR2Display_Demographic" class="org.socraticgrid.documenttransformer.XSLTTransformStep">
-        <property name="styleSheet" value="classpath:FHIRToJSONFact_Demographic.xslt"/>
+        <property name="xsltStyleSheet"> 
+            <bean class="org.springframework.core.io.ClassPathResource">
+                <constructor-arg value="FHIRToJSONFact_Demographic.xslt"/>
+            </bean>
+        </property>
     </bean>
     
     <bean name="Demographics" class="org.socraticgrid.documenttransformer.TransformPipeline">
